@@ -83,7 +83,7 @@ class opts(object):
                              help='model architecture. Currently tested'
                                   'res_18 | res_101 | resdcn_18 | resdcn_101 |'
                                   'dlav0_34 | dla_34 | hourglass')
-    self.parser.add_argument('--dla_node', default='dcn') 
+    self.parser.add_argument('--dla_node', default='conv')
     self.parser.add_argument('--head_conv', type=int, default=-1,
                              help='conv layer channels for output head'
                                   '0 for no conv layer'
@@ -254,6 +254,21 @@ class opts(object):
     self.parser.add_argument('--custom_dataset_img_path', default='')
     self.parser.add_argument('--custom_dataset_ann_path', default='')
 
+    # provide data dir
+    self.parser.add_argument('--data_dir', default='data')
+
+    #Vitis Quantization
+    self.parser.add_argument('--quant_mode', choices=['float', 'calib', 'test'], default='float',
+    help='quantization mode. 0: no quantization, evaluate float model, calib: quantize, test: evaluate quantized model')
+    self.parser.add_argument('--deploy',
+                        dest='deploy',
+                        action='store_true',
+                        help='export xmodel for deployment')
+    self.parser.add_argument('--fast_finetune',
+                        dest='fast_finetune',
+                        action='store_true',
+                        help='fast finetune model before calibration')
+
   def parse(self, args=''):
     if args == '':
       opt = self.parser.parse_args()
@@ -316,7 +331,7 @@ class opts(object):
 
     # log dirs
     opt.root_dir = os.path.join(os.path.dirname(__file__), '..', '..')
-    opt.data_dir = os.path.join(opt.root_dir, 'data')
+    #opt.data_dir = os.path.join(opt.root_dir, 'data')
     opt.exp_dir = os.path.join(opt.root_dir, 'exp', opt.task)
     opt.save_dir = os.path.join(opt.exp_dir, opt.exp_id)
     opt.debug_dir = os.path.join(opt.save_dir, 'debug')
