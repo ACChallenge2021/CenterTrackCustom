@@ -23,7 +23,6 @@ exp
 exp/*
 *.json
 *.mat
-model/*
 src/.vscode/*
 src/paths.py
 preds/*
