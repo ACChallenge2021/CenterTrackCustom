@@ -1,0 +1,9 @@
+{
+    "lib": "libvart-dpu-runner.so",
+    "filename": "DLASegDDD.xmodel",
+    "kernel": [
+        "subgraph_DLASeg__DLASeg_IDAUp_ida_up__ConvTranspose2d_up_1__13041",
+        "subgraph_DLASeg__DLASeg_DLAUp_dla_up__IDAUp_ida_0__ConvTranspose2d_up_1__12584"
+    ],
+    "target": "DPUCZDX8G_ISA0_B4096_MAX_BG2"
+}
