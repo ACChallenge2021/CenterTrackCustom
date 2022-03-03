@@ -1,3 +1,6 @@
+#use command line options:
+# ddd --load_model ../models/nuScenes_3Ddetection_e140.pth --gpus 0 --dataset nuscenes --dla_node conv --data_dir /media/ronny/dataset --quant_mode calib --batch_size 1 --num_workers 0
+
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -28,8 +31,8 @@ def evaluate(detector, dataset, opt):
     loss_total, losses = detector.run(img_tensor)
     Loss += loss_total
     total += 1
-    Bar.suffix = '[{0}/{1}]|Tot: {total:} |ETA: {eta:} '.format(
-      ind, num_iters, total=bar.elapsed_td, eta=bar.eta_td)
+    Bar.suffix = '[{0}/{1}]|Tot: {total:} |ETA: {eta:} | tot_Loss: {totloss:}'.format(
+      ind, num_iters, total=bar.elapsed_td, eta=bar.eta_td, totloss=loss_total)
     bar.next()
   bar.finish()
   return Loss / total

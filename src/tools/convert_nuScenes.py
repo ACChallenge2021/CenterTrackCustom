@@ -18,8 +18,8 @@ import _init_paths
 from utils.ddd_utils import compute_box_3d, project_to_image, alpha2rot_y
 from utils.ddd_utils import draw_box_3d, unproject_2d_to_3d
 
-DATA_PATH = '../../data/nuscenes/'
-OUT_PATH = DATA_PATH + 'annotations/'
+DATA_PATH = '/media/ronny/dataset/nuscenes/'
+OUT_PATH = DATA_PATH + 'annotationsTrack/'
 SPLITS = {'val': 'v1.0-trainval', 'train': 'v1.0-trainval', 'test': 'v1.0-test'}
 DEBUG = False
 CATS = ['car', 'truck', 'bus', 'trailer', 'construction_vehicle', 

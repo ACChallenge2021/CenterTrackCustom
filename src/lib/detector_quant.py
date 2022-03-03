@@ -52,6 +52,23 @@ class DetectorQuant(Detector):
         images = torch.from_numpy(image)
         images = images.to(self.opt.device, non_blocking=self.opt.non_block_test)
 
+        # initializing tracker
+        pre_hms, pre_inds = None, None
+        if self.opt.tracking:
+            # initialize the first frame
+            if self.pre_images is None:
+                print('Initialize tracking!')
+                self.pre_images = images
+                self.tracker.init_track(
+                    meta['pre_dets'] if 'pre_dets' in meta else [])
+            if self.opt.pre_hm:
+                # render input heatmap from tracker status
+                # pre_inds is not used in the current version.
+                # We used pre_inds for learning an offset from previous image to
+                # the current image.
+                pre_hms, pre_inds = self._get_additional_inputs(
+                    self.tracker.tracks, meta, with_hm=not self.opt.zero_pre_hm)
+
         pre_process_time = time.time()
         pre_time += pre_process_time - scale_start_time
 
@@ -61,6 +78,14 @@ class DetectorQuant(Detector):
         decode_time = time.time()
         dec_time += decode_time - forward_time
         torch.cuda.synchronize()
+
+        if self.opt.tracking:
+            # public detection mode in MOT challenge
+            #public_det = meta['cur_dets'] if self.opt.public_det else None
+            # add tracking id to results
+            #results = self.tracker.step(results, public_det)
+            self.pre_images = images
+
 
         #for out in output:
         #    output[out] = output[out].to(torch.device('cpu'), non_blocking=self.opt.non_block_test)

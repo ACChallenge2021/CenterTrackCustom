@@ -48,11 +48,11 @@ class nuScenes(GenericDataset):
     print('Dataset version', opt.dataset_version)
     if opt.dataset_version == 'test':
       ann_path = os.path.join(data_dir, 
-        'annotations', 'test.json')
+        'annotationsTrack', 'test.json')
       img_dir = os.path.join(data_dir, 'v1.0-test')
     else:
       ann_path = os.path.join(data_dir, 
-        'annotations', '{}{}.json').format(opt.dataset_version, split_name)
+        'annotationsTrack', '{}{}.json').format(opt.dataset_version, split_name)
 
     self.images = None
     super(nuScenes, self).__init__(opt, split, ann_path, img_dir)
